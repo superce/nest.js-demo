@@ -5,5 +5,5 @@ export interface Article {
     content: String,      // content
     createTime?: String,  // 创建时间
     updateTime?: String,  // 更新时间
-    isDelete?: String,    // 是否删除
+    isDelete?: Boolean,    // 是否删除
   }

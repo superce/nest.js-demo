@@ -1,6 +1,6 @@
 // src/filters/http-execption.filters.ts
 
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, Logger } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { execPath } from 'process';
 
@@ -11,10 +11,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
     const message = exception.message
-
-    response
-      .status(status)
-      .json({
+    console.log('response----', status);
+    
+    const exceptionResponse: any = exception.getResponse()
+    let validatorMessage = exceptionResponse
+    if (typeof validatorMessage === 'object') {
+      validatorMessage = exceptionResponse.message[0]
+    }
+    response.status(status).json({
         code: status,
         message,
       });
